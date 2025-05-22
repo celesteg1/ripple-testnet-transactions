@@ -1,4 +1,5 @@
 <script setup>
+
 import { ref, onMounted } from 'vue'
 import { Client } from 'xrpl'
 
@@ -43,6 +44,7 @@ const getXrpBalance = async () => {
 <template>
   <div class="container">
     <div class="logo">  
+
       <h1><img src="/icon-ripple-xrp-app.png" alt="logo" />Ripple Testnet Transactions App</h1>
     </div>
 
@@ -68,7 +70,6 @@ const getXrpBalance = async () => {
         {{ loading ? 'Loading...' : 'Get Balance' }}
       </button>
     </div>
-
     <p v-if="balance"><strong>Balance:</strong> {{ balance }}</p>
   </div>
 </template>
