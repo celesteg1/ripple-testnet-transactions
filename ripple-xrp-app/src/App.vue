@@ -1,10 +1,22 @@
 <script setup>
-import { ref } from 'vue'
+
+import { ref, onMounted } from 'vue'
 import { Client } from 'xrpl'
+
+// Grab XRP testnet wallet address from .env (Vite exposes this at import.meta.env)
+const envWallet = import.meta.env.VITE_XRP_TESTNET_WALLET_ADDRESS
 
 const address = ref('')
 const balance = ref(null)
 const loading = ref(false)
+const showAddress = ref(false)
+
+// Load env wallet address if present
+onMounted(() => {
+  if (envWallet) {
+    address.value = envWallet
+  }
+})
 
 const getXrpBalance = async () => {
   try {
@@ -32,13 +44,33 @@ const getXrpBalance = async () => {
 <template>
   <div class="container">
     <div class="logo">  
-      <h1><img src="/icon-ripple-xrp-app.png" alt="logo"/>Ripple Testnet Transactions App</h1>
+
+      <h1><img src="/icon-ripple-xrp-app.png" alt="logo" />Ripple Testnet Transactions App</h1>
     </div>
+
+    <div class="api-key-container">
+      <label for="wallet-address">XRP Testnet wallet address:</label>
+      <div class="input-wrapper">
+        <input      
+          :key="showAddress"   
+          id="wallet-address"
+          :type="showAddress ? 'text' : 'password'"
+          v-model="address"
+          :readonly="!!envWallet"
+          placeholder="Enter your XRP Testnet Wallet Address"
+        />
+        <button @click="showAddress = !showAddress" class="eye-btn">
+          {{ showAddress ? '🔒' : '👁️' }}
+        </button>
+      </div>
+    </div>
+
     <div class="form">
-      <input v-model="address" placeholder="Enter your XRP Wallet Address" />
-      <button @click="getXrpBalance">Get Balance</button>
+      <button @click="getXrpBalance" :disabled="loading">
+        {{ loading ? 'Loading...' : 'Get Balance' }}
+      </button>
     </div>
-    <p><strong>Balance:</strong> {{ balance }} </p>
+    <p v-if="balance"><strong>Balance:</strong> {{ balance }}</p>
   </div>
 </template>
 
