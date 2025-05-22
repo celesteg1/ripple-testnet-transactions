@@ -1,5 +1,3 @@
-# Ripple (XRP) Testnet APP
-
 ![Version](https://img.shields.io/github/v/release/celesteg1/ripple-testnet-transactions)
 ![License: MIT](https://img.shields.io/github/license/celesteg1/ripple-testnet-transactions)
 ![Last Commit](https://img.shields.io/github/last-commit/celesteg1/ripple-testnet-transactions)
